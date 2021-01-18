@@ -49,7 +49,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -63,7 +63,7 @@ static const Layout layouts[] = {
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
 static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
-
+static const char *slockcmd[] = { "slock", NULL };
 static const char *roficmd[] = { "rofi", "-show", "drun", "-show-icons", NULL };
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
@@ -71,10 +71,11 @@ static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ 0,                       		XF86XK_AudioLowerVolume, spawn, 	 	 {.v = downvol } },
-	{ 0,                       		XF86XK_AudioMute, 	 	 spawn, 	 	 {.v = mutevol } },
-	{ 0,                       		XF86XK_AudioRaiseVolume, spawn, 	 	 {.v = upvol   } },
-	{ MODKEY, 						XK_d,	   		 		 spawn, 	 	 {.v = roficmd } },
+	{ 0,                       	XF86XK_AudioLowerVolume, 	 	 spawn, 	 {.v = downvol } },
+	{ 0,                       	XF86XK_AudioMute, 	 	 	 spawn, 	 {.v = mutevol } },
+	{ 0,                       	XF86XK_AudioRaiseVolume, 	 	 spawn, 	 {.v = upvol   } },
+	{ MODKEY|ShiftMask, 		XK_l, 					 spawn, 	 {.v = slockcmd } },
+	{ MODKEY, 			XK_d,	   		 		 spawn, 	 {.v = roficmd } },
 	{ MODKEY,                       XK_a,      				 spawn,      	 {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, 				 spawn,      	 {.v = termcmd } },
 	{ MODKEY,                       XK_b,      				 togglebar,  	 {0} },
